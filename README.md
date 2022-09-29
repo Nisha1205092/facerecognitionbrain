@@ -1,3 +1,6 @@
+### Clarifai Guide
+https://docs.clarifai.com/clarifai-basics/start-here-5-mins-or-less
+
 ### Face Detection model we will be using:
 https://www.clarifai.com/models/face-detection
 
