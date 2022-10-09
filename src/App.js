@@ -9,6 +9,14 @@ import React, { Component } from 'react';
 // import Clarifai from 'clarifai';
 
 // const app = new Clarifai.App({apiKey: "ab6dc8175b254e0ca2e552b451ed9cd5"  });
+const USER_ID = 'nisha-1205092';
+// Your PAT (Personal Access Token) can be found in the portal under Authentification
+const PAT = 'c2a459add0d445a085463d2bac09df1a';
+const APP_ID = 'my-general-image-recognition';
+// Change these to whatever model and image URL you want to use
+const MODEL_ID = 'general-image-recognition';
+const MODEL_VERSION_ID = 'aa7f35c01e0642fda5cf400f543e7c40';    
+const IMAGE_URL = 'https://samples.clarifai.com/metro-north.jpg';
 
 class App extends Component {
   constructor() {
@@ -23,25 +31,41 @@ class App extends Component {
   onInputChange = (event) => {
     console.log(event.target.value);
     this.setState({input: event.target.value});
+    this.setState({imageUrl: this.state.input});
   }
   
   onButtonSubmit = () => {
-    console.log('click');
-    this.setState({imageUrl: this.state.input});
-    console.log(this.state.imageUrl);
-    // app.models.predict("https://api.clarifai.com/v2/models/face-detection/versions/6dc7e46bc9124c5c8824be4822abe105/outputs", "https://samples.clarifai.com/face-det.jpg").then(
-    //   function(response) {
-    //     console.log(response);
-    //   }, function(err) {
+    console.log('click')
+   const raw = JSON.stringify({
+     user_app_id : {
+       user_id: USER_ID,
+       app_id: APP_ID
+     },
+     inputs: [
+       {
+         data: {
+           image: {
+             url: this.state.imageUrl
+           },
+         },
+       },
+     ],
+   });
 
-    //   });
-    // app.models.predict("6dc7e46bc9124c5c8824be4822abe105", "https://samples.clarifai.com/face-det.jpg").then(
-    //   function(response) {
-    //     console.log(response);
-    //   }, function(err) {
-        
-    //   });
-  }
+  const requestOptions = {
+    method: 'POST',
+    headers: {
+        'Accept': 'application/json',
+        'Authorization': 'Key ' + PAT
+    },
+    body: raw
+  };
+
+    fetch("https://api.clarifai.com/v2/models/f76196b43bbd45c99b4f3cd8e8b40a8a/outputs", requestOptions)
+      .then(response => response.json())
+      .then(result => console.log(result))
+      .catch(error => console.log('error', error));
+ }
 
   render() {
     return (
