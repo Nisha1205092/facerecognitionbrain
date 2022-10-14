@@ -31,6 +31,7 @@ class App extends Component {
   onInputChange = (event) => {
     // console.log(event.target.value);
     this.setState({input: event.target.value});
+    console.log('input: ' + this.state.input); //still empty
     // this.setState({imageUrl: event.target.value});
   }
   
