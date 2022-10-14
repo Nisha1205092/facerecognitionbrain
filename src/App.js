@@ -29,13 +29,14 @@ class App extends Component {
 
   
   onInputChange = (event) => {
-    console.log(event.target.value);
+    // console.log(event.target.value);
     this.setState({input: event.target.value});
-    this.setState({imageUrl: this.state.input});
+    this.setState({imageUrl: event.target.value});
   }
   
   onButtonSubmit = () => {
-    console.log('click')
+    // console.log('click')
+    // console.log(this.state.input);
    const raw = JSON.stringify({
      user_app_id : {
        user_id: USER_ID,
