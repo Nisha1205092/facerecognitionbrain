@@ -31,12 +31,15 @@ class App extends Component {
   onInputChange = (event) => {
     // console.log(event.target.value);
     this.setState({input: event.target.value});
-    this.setState({imageUrl: event.target.value});
+    // this.setState({imageUrl: event.target.value});
   }
   
   onButtonSubmit = () => {
-    // console.log('click')
-    // console.log(this.state.input);
+    this.setState({imageUrl: this.state.input});
+    console.log(this.state.input);
+    console.log('imageUrl: ' + this.state.imageUrl); //still empty
+    // console.log('click') 
+    
    const raw = JSON.stringify({
      user_app_id : {
        user_id: USER_ID,
@@ -46,7 +49,7 @@ class App extends Component {
        {
          data: {
            image: {
-             url: this.state.imageUrl
+             url: this.state.input //Andrei said to use 'input' instead of imageUrl. It gives an error
            },
          },
        },
@@ -71,7 +74,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <MyParticles />
+        <MyParticles /> 
         <Navigation />
         <Logo />
         <Rank />
