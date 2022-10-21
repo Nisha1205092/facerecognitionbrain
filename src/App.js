@@ -2,6 +2,7 @@ import Navigation from './components/navigation/Navigation';
 import FaceRecognition from './components/facerecognition/FaceRecognition';
 import Logo from './components/logo/Logo';
 import Signin from './components/signin/Signin';
+import Register from './components/register/Register';
 import ImageLinkForm from './components/imagelinkform/ImageLinkForm';
 import Rank from './components/rank/Rank';
 import MyParticles from './components/particle/MyParticles';
@@ -106,9 +107,8 @@ class App extends Component {
       <div className="App">
         <MyParticles /> 
         <Navigation onRouteChange={this.onRouteChange}/>
-        { this.state.route === 'signin' 
-          ? <Signin onRouteChange={this.onRouteChange}/>
-          : <div>
+        { this.state.route === 'home' 
+          ? <div>
               <Logo />
               <Rank />
               <ImageLinkForm 
@@ -116,8 +116,11 @@ class App extends Component {
                 onButtonSubmit = {this.onButtonSubmit}
               />
               <FaceRecognition box={this.state.box} imageUrl={this.state.imageUrl}/>  
-            </div>  
-          
+            </div> 
+          : ( this.state.route === 'signin'
+            ? <Signin onRouteChange={this.onRouteChange}/> 
+            : <Register onRouteChange={this.onRouteChange}/>
+          )  
         }
         
       </div>
