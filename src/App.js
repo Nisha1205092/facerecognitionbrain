@@ -1,6 +1,7 @@
 import Navigation from './components/navigation/Navigation';
 import FaceRecognition from './components/facerecognition/FaceRecognition';
 import Logo from './components/logo/Logo';
+import Signin from './components/signin/Signin';
 import ImageLinkForm from './components/imagelinkform/ImageLinkForm';
 import Rank from './components/rank/Rank';
 import MyParticles from './components/particle/MyParticles';
@@ -24,8 +25,13 @@ class App extends Component {
     this.state = {
       input: '',
       imageUrl: '',
-      box: {}
+      box: {},
+      route: 'signin',
     }
+  }
+
+  onRouteChange = (route) => {
+    this.setState({route: route});
   }
 
   calculateFaceLocation = (data) => {
@@ -99,14 +105,21 @@ class App extends Component {
     return (
       <div className="App">
         <MyParticles /> 
-        <Navigation />
-        <Logo />
-        <Rank />
-        <ImageLinkForm 
-          onInputChange = {this.onInputChange} 
-          onButtonSubmit = {this.onButtonSubmit}
-        />
-        <FaceRecognition box={this.state.box} imageUrl={this.state.imageUrl}/>
+        <Navigation onRouteChange={this.onRouteChange}/>
+        { this.state.route === 'signin' 
+          ? <Signin onRouteChange={this.onRouteChange}/>
+          : <div>
+              <Logo />
+              <Rank />
+              <ImageLinkForm 
+                onInputChange = {this.onInputChange} 
+                onButtonSubmit = {this.onButtonSubmit}
+              />
+              <FaceRecognition box={this.state.box} imageUrl={this.state.imageUrl}/>  
+            </div>  
+          
+        }
+        
       </div>
     );
   }
