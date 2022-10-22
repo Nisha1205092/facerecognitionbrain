@@ -28,10 +28,16 @@ class App extends Component {
       imageUrl: '',
       box: {},
       route: 'signin',
+      isSignedIn: false,
     }
   }
 
   onRouteChange = (route) => {
+    if(route === 'signout') {
+      this.setState({isSignedIn: false})
+    } else if(route === 'home') {
+      this.setState({isSignedIn: true})
+    }
     this.setState({route: route});
   }
 
@@ -106,7 +112,7 @@ class App extends Component {
     return (
       <div className="App">
         <MyParticles /> 
-        <Navigation onRouteChange={this.onRouteChange}/>
+        <Navigation isSignedIn={this.state.isSignedIn} onRouteChange={this.onRouteChange}/>
         { this.state.route === 'home' 
           ? <div>
               <Logo />
