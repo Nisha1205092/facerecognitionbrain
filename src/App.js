@@ -32,6 +32,12 @@ class App extends Component {
     }
   }
 
+  componentDidMount() {
+    fetch('http://localhost:3000/')
+      .then(response => response.json())
+      .then(console.log); //prints the pre-saved two users
+  }
+
   onRouteChange = (route) => {
     if(route === 'signout') {
       this.setState({isSignedIn: false})
