@@ -29,14 +29,30 @@ class App extends Component {
       box: {},
       route: 'signin',
       isSignedIn: false,
+      user: {
+        id: '',
+        name: '',
+        email: '',
+        entries: 0,
+        joined: ''
+      }
     }
   }
 
-  componentDidMount() {
-    fetch('http://localhost:3000/')
-      .then(response => response.json())
-      .then(console.log); //prints the pre-saved two users
+  loadUser = (data) => {
+    this.setState({user: {
+      id: data.id, 
+      name: data.name,
+      email: data.email,
+      entries: data.entries,
+      joined: data.joined          
+    }})  
   }
+  // componentDidMount() {
+  //   fetch('http://localhost:3000/')
+  //     .then(response => response.json())
+  //     .then(console.log); //prints the pre-saved two users
+  // }
 
   onRouteChange = (route) => {
     if(route === 'signout') {
@@ -105,14 +121,14 @@ class App extends Component {
     body: raw
   };
 
-    fetch("https://api.clarifai.com/v2/models/f76196b43bbd45c99b4f3cd8e8b40a8a/outputs", requestOptions)
-      .then(response => response.json())
-      .then(result => {
-        this.displayFaceBox(this.calculateFaceLocation(result));
-        //console.log(result.outputs[0].data.regions[0].region_info.bounding_box)
-      })
-      .catch(error => console.log('error', error));
- }
+  fetch("https://api.clarifai.com/v2/models/f76196b43bbd45c99b4f3cd8e8b40a8a/outputs", requestOptions)
+    .then(response => response.json())
+    .then(result => {
+      this.displayFaceBox(this.calculateFaceLocation(result));
+      //console.log(result.outputs[0].data.regions[0].region_info.bounding_box)
+    })
+    .catch(error => console.log('error', error));
+  }      
 
   render() {
     //destructuring, to remove this.state
@@ -133,7 +149,7 @@ class App extends Component {
             </div> 
           : ( route === 'signin'
             ? <Signin onRouteChange={this.onRouteChange}/> 
-            : <Register onRouteChange={this.onRouteChange}/>
+            : <Register loadUser={this.loadUser} onRouteChange={this.onRouteChange}/>
           )  
         }
         
