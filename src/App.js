@@ -146,7 +146,7 @@ class App extends Component {
       //console.log(result.outputs[0].data.regions[0].region_info.bounding_box)
     )
     .catch(error => console.log('error', error)); 
-  }     
+  } //end of onButtonSubmit     
 
   render() {
     //destructuring, to remove this.state
