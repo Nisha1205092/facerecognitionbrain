@@ -96,7 +96,7 @@ class App extends Component {
     console.log('imageUrl: ' + this.state.imageUrl); //still empty
     // console.log('click') 
     
-   const raw = JSON.stringify({
+    const raw = JSON.stringify({
      user_app_id : {
        user_id: USER_ID,
        app_id: APP_ID
@@ -112,40 +112,38 @@ class App extends Component {
      ],
    });
 
-  const requestOptions = {
-    method: 'POST',
-    headers: {
-        'Accept': 'application/json',
-        'Authorization': 'Key ' + PAT
-    },
-    body: raw
-  };
+    const requestOptions = {
+      method: 'POST',
+      headers: {
+          'Accept': 'application/json',
+          'Authorization': 'Key ' + PAT
+      },
+      body: raw
+    };
 
-  fetch("https://api.clarifai.com/v2/models/f76196b43bbd45c99b4f3cd8e8b40a8a/outputs", requestOptions)
-    .then(response => response.json())
-    .then(result => {
-      if (result) {
-        fetch('http://localhost:3000/image', {
-            method: 'put',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({
-              id: this.state.user.id
-            })
-        })
-          .then(response => response.json())
-          .then(count => {
-            this.setState({user: {
-              entries: count
-            }})
+    fetch("https://api.clarifai.com/v2/models/f76196b43bbd45c99b4f3cd8e8b40a8a/outputs", requestOptions)
+      .then(response => response.json())
+      .then(result => {
+        if (result) {
+          fetch('http://localhost:3000/image', {
+              method: 'put',
+              headers: {'Content-Type': 'application/json'},
+              body: JSON.stringify({
+                id: this.state.user.id
+              })
           })
-        this.displayFaceBox(this.calculateFaceLocation(result));
+            .then(response => response.json())
+            .then(count => {
+              this.setState(Object.assign(this.state.user, {entries: count}));
+            })
+          this.displayFaceBox(this.calculateFaceLocation(result));
+          }
+              
+          
         }
-            
-        
-      }
-      //console.log(result.outputs[0].data.regions[0].region_info.bounding_box)
-    )
-    .catch(error => console.log('error', error)); 
+        //console.log(result.outputs[0].data.regions[0].region_info.bounding_box)
+      )
+      .catch(error => console.log('error', error)); 
   } //end of onButtonSubmit     
 
   render() {
