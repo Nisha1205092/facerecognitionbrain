@@ -18,7 +18,7 @@ const APP_ID = 'my-general-image-recognition';
 // Change these to whatever model and image URL you want to use
 const MODEL_ID = 'general-image-recognition';
 const MODEL_VERSION_ID = 'aa7f35c01e0642fda5cf400f543e7c40';    
-const IMAGE_URL = 'https://samples.clarifai.com/metro-north.jpg';
+const IMAGE_URL = 'https://image.shutterstock.com/image-photo/isolated-shot-young-handsome-male-260nw-762790210.jpg';
 
 class App extends Component {
   constructor() {
@@ -125,7 +125,7 @@ class App extends Component {
       .then(response => response.json())
       .then(result => {
         if (result) {
-          fetch('http://localhost:3000/image', {
+          fetch('http://localhost:3002/image', {
               method: 'put',
               headers: {'Content-Type': 'application/json'},
               body: JSON.stringify({
