@@ -8,18 +8,16 @@ import Rank from './components/rank/Rank';
 import MyParticles from './components/particle/MyParticles';
 import './App.css';
 import React, { Component } from 'react';
-// import Clarifai from 'clarifai';
-
-// const app = new Clarifai.App({apiKey: "ab6dc8175b254e0ca2e552b451ed9cd5"  });
-const USER_ID = 'nisha-1205092';
-// Your PAT (Personal Access Token) can be found in the portal under Authentification
-const PAT = 'c2a459add0d445a085463d2bac09df1a';
-const APP_ID = 'my-general-image-recognition';
-// Change these to whatever model and image URL you want to use
-const MODEL_ID = 'general-image-recognition';
-const MODEL_VERSION_ID = 'aa7f35c01e0642fda5cf400f543e7c40';    
-const IMAGE_URL = 'https://image.shutterstock.com/image-photo/isolated-shot-young-handsome-male-260nw-762790210.jpg';
-
+// ---------------clafifai related code
+// const USER_ID = 'nisha-1205092';
+// // Your PAT (Personal Access Token) can be found in the portal under Authentification
+// const PAT = 'c2a459add0d445a085463d2bac09df1a';
+// const APP_ID = 'my-general-image-recognition';
+// // Change these to whatever model and image URL you want to use
+// const MODEL_ID = 'general-image-recognition';
+// const MODEL_VERSION_ID = 'aa7f35c01e0642fda5cf400f543e7c40';    
+// const IMAGE_URL = 'https://image.shutterstock.com/image-photo/isolated-shot-young-handsome-male-260nw-762790210.jpg';
+// ---------------clafifai related code
 const initialState = {
     input: '',
     imageUrl: '',
@@ -50,11 +48,6 @@ class App extends Component {
       joined: data.joined          
     }})  
   }
-  // componentDidMount() {
-  //   fetch('http://localhost:3000/')
-  //     .then(response => response.json())
-  //     .then(console.log); //prints the pre-saved two users
-  // }
 
   onRouteChange = (route) => {
     if(route === 'signout') {
@@ -86,10 +79,8 @@ class App extends Component {
   }
   
   onInputChange = (event) => {
-    // console.log(event.target.value);
     this.setState({input: event.target.value});
     console.log('input: ' + this.state.input); //still empty
-    // this.setState({imageUrl: event.target.value});
   }
   
   onButtonSubmit = () => {
@@ -97,33 +88,13 @@ class App extends Component {
     console.log(this.state.input);
     console.log('imageUrl: ' + this.state.imageUrl); //still empty
     // console.log('click') 
-    
-    const raw = JSON.stringify({
-     user_app_id : {
-       user_id: USER_ID,
-       app_id: APP_ID
-     },
-     inputs: [
-       {
-         data: {
-           image: {
-             url: this.state.input //Andrei said to use 'input' instead of imageUrl. It gives an error
-           },
-         },
-       },
-     ],
-   });
-
-    const requestOptions = {
-      method: 'POST',
-      headers: {
-          'Accept': 'application/json',
-          'Authorization': 'Key ' + PAT
-      },
-      body: raw
-    };
-
-    fetch("https://api.clarifai.com/v2/models/f76196b43bbd45c99b4f3cd8e8b40a8a/outputs", requestOptions)
+    fetch('http://localhost:3002/imageurl', {
+      method: 'post',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        input: this.state.input
+      })
+    })
       .then(response => response.json())
       .then(result => {
         if (result) {
@@ -139,14 +110,14 @@ class App extends Component {
               this.setState(Object.assign(this.state.user, {entries: count}));
             })
             .catch(err => console.log('error putting image ', err));
+            
           this.displayFaceBox(this.calculateFaceLocation(result));
-          }
-              
-          
-        }
+          } //end if
+        } //end then 2
         //console.log(result.outputs[0].data.regions[0].region_info.bounding_box)
-      )
-      .catch(error => console.log('error', error)); 
+      ) //end then 2
+      .catch(error => console.log('error', error));
+    // this.displayFaceBox(this.calculateFaceLocation(result));
   } //end of onButtonSubmit     
 
   render() {
