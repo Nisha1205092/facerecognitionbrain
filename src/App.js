@@ -88,7 +88,7 @@ class App extends Component {
     console.log(this.state.input);
     console.log('imageUrl: ' + this.state.imageUrl); //still empty
     // console.log('click') 
-    fetch('http://localhost:3002/imageurl', {
+    fetch('https://damp-bastion-63064.herokuapp.com/imageurl', {
       method: 'post',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({
@@ -98,7 +98,7 @@ class App extends Component {
       .then(response => response.json())
       .then(result => {
         if (result) {
-          fetch('http://localhost:3002/image', {
+          fetch('https://damp-bastion-63064.herokuapp.com:3002/image', {
               method: 'put',
               headers: {'Content-Type': 'application/json'},
               body: JSON.stringify({
