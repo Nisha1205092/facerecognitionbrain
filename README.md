@@ -6,6 +6,9 @@
 - used Clarifai Face Detection API for the project
 - PostgreSQL as DB
 
+### Backend
+https://github.com/Nisha1205092/smart-brain-api
+
 ### Clarifai Guide
 https://docs.clarifai.com/clarifai-basics/start-here-5-mins-or-less
 
