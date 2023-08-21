@@ -9,4 +9,4 @@ https://docs.clarifai.com/clarifai-basics/start-here-5-mins-or-less
 ### Face Detection model we will be using:
 https://www.clarifai.com/models/face-detection
 
-The DB (on Render) will expire after 90 days (i.e., 18 July 2023)
+The DB (on Render) will expire after 90 days (i.e., 19 Nov 2023)
